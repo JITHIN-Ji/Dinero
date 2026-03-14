@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 
-// =============================================
-// CONFIGURATION — Update APK link when ready
-// =============================================
+
 const CONFIG = {
-  APK_URL: "YOUR_APK_LINK_HERE", // 👈 Replace with your APK URL
+  APK_URL: "/DineroStakes.apk",
 };
-// =============================================
+
 
 const GOLD_H = "linear-gradient(90deg,  #7B6328 0%, #A8882E 15%, #C9A84C 35%, #E2C664 50%, #C9A84C 65%, #A8882E 85%, #7B6328 100%)";
 const GOLD_D = "linear-gradient(135deg, #7B6328 0%, #A8882E 15%, #C9A84C 35%, #E2C664 50%, #C9A84C 65%, #A8882E 85%, #7B6328 100%)";
@@ -19,8 +17,7 @@ export default function DinoraStakesDownload() {
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
 
-    // ── Read referral code from URL ──
-    // Supports both: /ref/ABC123  and  ?ref=ABC123
+    
     const pathname = window.location.pathname;
     const search   = window.location.search;
 
