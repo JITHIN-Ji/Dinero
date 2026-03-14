@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 
-
 const CONFIG = {
   APK_URL: "/DineroStakes.apk",
 };
-
 
 const GOLD_H = "linear-gradient(90deg,  #7B6328 0%, #A8882E 15%, #C9A84C 35%, #E2C664 50%, #C9A84C 65%, #A8882E 85%, #7B6328 100%)";
 const GOLD_D = "linear-gradient(135deg, #7B6328 0%, #A8882E 15%, #C9A84C 35%, #E2C664 50%, #C9A84C 65%, #A8882E 85%, #7B6328 100%)";
@@ -17,7 +15,6 @@ export default function DinoraStakesDownload() {
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
 
-    
     const pathname = window.location.pathname;
     const search   = window.location.search;
 
@@ -32,9 +29,7 @@ export default function DinoraStakesDownload() {
 
     if (code) {
       setReferralCode(code);
-      // ── Silently copy to clipboard in background ──
       copyToClipboard(code);
-      // ── Fetch referrer name from Express backend ──
       fetchReferrerName(code);
     }
 
@@ -45,7 +40,6 @@ export default function DinoraStakesDownload() {
     try {
       await navigator.clipboard.writeText(code);
     } catch (e) {
-      // Fallback for older browsers
       try {
         const el          = document.createElement('textarea');
         el.value          = code;
@@ -99,34 +93,40 @@ export default function DinoraStakesDownload() {
           -webkit-text-size-adjust: 100%;
         }
 
+        /* ── BACKGROUND — dark base with soft warm gold glow in center ── */
         .ds-bg {
           position: fixed; inset: 0; z-index: 0;
-          background: #0d0900;
+          background: #0a0800;
         }
+        /* soft golden glow — center top, subtle corners */
         .ds-bg::before {
           content: '';
           position: absolute; inset: 0;
           background:
-            radial-gradient(ellipse 80% 60% at 50% 40%, rgba(180,130,20,0.22) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 40% at 20% 80%, rgba(140,100,10,0.15) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 50% at 80% 20%, rgba(160,120,15,0.12) 0%, transparent 55%);
+            radial-gradient(ellipse 75% 55% at 50% 35%, rgba(160,110,15,0.17) 0%, transparent 65%),
+            radial-gradient(ellipse 45% 35% at 15% 85%, rgba(110,75,8,0.10)   0%, transparent 55%),
+            radial-gradient(ellipse 40% 40% at 85% 15%, rgba(130,90,10,0.09)  0%, transparent 50%);
         }
+        /* light grain texture for depth */
         .ds-bg::after {
           content: '';
-          position: absolute; inset: 0; opacity: 0.85;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)' opacity='0.35' fill='%23c9a84c'/%3E%3C/svg%3E");
+          position: absolute; inset: 0; opacity: 0.35;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23g)' opacity='0.3' fill='%23c9a84c'/%3E%3C/svg%3E");
           background-size: 200px 200px;
           mix-blend-mode: overlay;
         }
+
+        /* subtle moving grain layer */
         .ds-grain {
-          position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.55;
+          position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.30;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='512' height='512' filter='url(%23n)' opacity='0.5' fill='%23b8882a'/%3E%3C/svg%3E");
           background-size: 160px 160px;
           mix-blend-mode: soft-light;
         }
+
         .ds-vignette {
           position: fixed; inset: 0; z-index: 2; pointer-events: none;
-          background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 30%, rgba(0,0,0,0.65) 100%);
+          background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 35%, rgba(0,0,0,0.60) 100%);
         }
 
         .ds-bar-top, .ds-bar-bottom {
@@ -162,8 +162,8 @@ export default function DinoraStakesDownload() {
           height: clamp(90px, 28vw, 130px);
           margin-bottom: 22px;
           display: flex; align-items: center; justify-content: center;
-          filter: drop-shadow(0 0 22px rgba(226,198,100,0.6))
-                  drop-shadow(0 0 50px rgba(201,168,76,0.28));
+          filter: drop-shadow(0 0 18px rgba(226,198,100,0.45))
+                  drop-shadow(0 0 40px rgba(201,168,76,0.20));
         }
         .ds-logo img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -176,13 +176,13 @@ export default function DinoraStakesDownload() {
           -webkit-text-fill-color: transparent;
           background-clip: text;
           text-align: center; line-height: 1.2;
-          filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));
+          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.9));
         }
 
         .ds-tagline {
           font-size: clamp(10px, 2.8vw, 13px);
           letter-spacing: clamp(3px, 1.2vw, 6px);
-          color: rgba(255,255,255,0.7);
+          color: rgba(255,255,255,0.60);
           text-transform: uppercase; margin-top: 10px;
           font-weight: 300; font-family: Georgia, serif;
           text-shadow: 0 1px 6px rgba(0,0,0,0.9);
@@ -196,11 +196,11 @@ export default function DinoraStakesDownload() {
         }
         .ds-rule.vis { opacity: 1; }
 
-        /* ── REFERRAL CARD — only shown when referral code is in URL ── */
+        /* ── REFERRAL CARD ── */
         .ds-ref-card {
           width: 100%; max-width: 420px;
-          background: rgba(20,14,4,0.88);
-          border: 1.5px solid rgba(200,146,42,0.4);
+          background: rgba(16,11,3,0.90);
+          border: 1px solid rgba(200,146,42,0.30);
           border-radius: 16px;
           padding: 20px 24px;
           text-align: center;
@@ -251,19 +251,19 @@ export default function DinoraStakesDownload() {
           -webkit-tap-highlight-color: transparent;
           touch-action: manipulation;
           transition: transform 0.15s ease, box-shadow 0.3s ease, filter 0.3s ease;
-          box-shadow: 0 4px 20px rgba(238,187,77,0.45), 0 2px 10px rgba(0,0,0,0.7);
+          box-shadow: 0 4px 24px rgba(238,187,77,0.42), 0 2px 10px rgba(0,0,0,0.75);
           animation: ds-pulse 2.5s ease-in-out infinite;
           position: relative; overflow: hidden;
         }
         .ds-btn::before {
           content: '';
           position: absolute; top: 0; left: -110%; width: 55%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
           animation: ds-shimmer 2.8s ease-in-out infinite;
         }
         .ds-btn:hover {
           filter: brightness(1.12);
-          box-shadow: 0 8px 48px rgba(238,187,77,0.7), 0 4px 20px rgba(0,0,0,0.9);
+          box-shadow: 0 8px 42px rgba(238,187,77,0.60), 0 4px 18px rgba(0,0,0,0.9);
           transform: translateY(-3px); animation: none;
         }
         .ds-btn:hover::before { animation: none; }
@@ -278,7 +278,7 @@ export default function DinoraStakesDownload() {
         .ds-btn-sub   {
           font-family: 'Rajdhani', sans-serif;
           font-size: clamp(10px, 2.5vw, 12px);
-          letter-spacing: 2px; color: rgba(255,255,255,0.6);
+          letter-spacing: 2px; color: rgba(255,255,255,0.60);
           font-weight: 600; margin-top: 4px; display: block;
         }
 
@@ -295,16 +295,16 @@ export default function DinoraStakesDownload() {
 
         .ds-badge {
           display: flex; align-items: center; gap: 6px;
-          background: rgba(0,0,0,0.5);
-          border: 1px solid rgba(197,168,76,0.35);
+          background: rgba(0,0,0,0.55);
+          border: 1px solid rgba(197,168,76,0.28);
           border-radius: 24px;
           padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 16px);
           font-size: clamp(10px, 2.4vw, 12px);
-          color: #E2C664; letter-spacing: 1.5px;
+          color: rgba(226,198,100,0.85); letter-spacing: 1.5px;
           text-transform: uppercase; font-weight: 700;
           backdrop-filter: blur(4px);
           -webkit-backdrop-filter: blur(4px);
-          text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.9);
           -webkit-tap-highlight-color: transparent;
         }
         .ds-badge svg { width: 11px; height: 11px; flex-shrink: 0; }
@@ -317,11 +317,11 @@ export default function DinoraStakesDownload() {
         .ds-footer.vis { opacity: 1; }
         .ds-footer-line {
           width: 50px; height: 1px; margin: 0 auto 12px;
-          background: ${GOLD_H}; opacity: 0.45;
+          background: ${GOLD_H}; opacity: 0.35;
         }
         .ds-footer p {
           font-size: clamp(10px, 2.5vw, 12px);
-          color: rgba(197,168,76,0.38);
+          color: rgba(197,168,76,0.32);
           letter-spacing: 2px; font-weight: 700;
           text-transform: uppercase;
           text-shadow: 0 1px 4px rgba(0,0,0,0.9);
@@ -343,8 +343,8 @@ export default function DinoraStakesDownload() {
         }
 
         @keyframes ds-pulse {
-          0%, 100% { box-shadow: 0 4px 20px rgba(238,187,77,0.45), 0 2px 10px rgba(0,0,0,0.7); }
-          50%       { box-shadow: 0 6px 40px rgba(238,187,77,0.7),  0 4px 20px rgba(0,0,0,0.9); }
+          0%, 100% { box-shadow: 0 4px 24px rgba(238,187,77,0.42), 0 2px 10px rgba(0,0,0,0.75); }
+          50%       { box-shadow: 0 6px 36px rgba(238,187,77,0.58), 0 4px 18px rgba(0,0,0,0.9); }
         }
         @keyframes ds-shimmer {
           0%        { left: -110%; }
@@ -352,14 +352,12 @@ export default function DinoraStakesDownload() {
         }
       `}</style>
 
-      {/* ── BACKGROUNDS ── */}
       <div className="ds-bg" />
       <div className="ds-grain" />
       <div className="ds-vignette" />
       <div className="ds-bar-top" />
       <div className="ds-bar-bottom" />
 
-      {/* ── MAIN ── */}
       <div className="ds-root">
 
         {/* LOGO + NAME */}
@@ -373,7 +371,7 @@ export default function DinoraStakesDownload() {
 
         <div className={`ds-rule ${visible ? "vis" : ""}`} />
 
-        {/* ── REFERRAL CARD ── only shows when /ref/CODE is in URL ── */}
+        {/* REFERRAL CARD */}
         {referralCode && (
           <div className={`ds-ref-card ${visible ? "vis" : ""}`}>
             {referrerName && (
